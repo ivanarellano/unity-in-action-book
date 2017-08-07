@@ -9,3 +9,6 @@ Self learning exercises from the [Unity in Action](https://www.manning.com/books
 
 ### Chapter 04
 ![Chapter 04](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch04/ch04.gif)
+
+### Chapter 05
+![Chapter 05](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch05/ch05.gif)
