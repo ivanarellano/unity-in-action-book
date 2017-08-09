@@ -10,10 +10,18 @@ public class RelativeMovement : MonoBehaviour {
     public float moveSpeed = 6.0f;
     public float rotSpeed = 15.0f;
 
+    public float jumpSpeed = 15.0f;
+    public float gravity = -9.8f;
+    public float terminalVelocity = -10.0f;
+    public float minFall = -1.5f;
+
     private CharacterController charController;
+    private ControllerColliderHit contact;
+    private float vertSpeed;
 
     void Start() {
         charController = GetComponent<CharacterController>();
+        vertSpeed = minFall;
     }
 
     void Update () {
@@ -40,7 +48,46 @@ public class RelativeMovement : MonoBehaviour {
             transform.rotation = Quaternion.Lerp(transform.rotation, direction, rotSpeed * Time.deltaTime);
         }
 
+        bool hitGround = false;
+        RaycastHit hit;
+        if (vertSpeed < 0 && Physics.Raycast(transform.position, Vector3.down, out hit)) {
+            /// charController.height = the height without the rounded ends
+            /// charController.radius = the rounded ends
+            /// divide (c.h + c.r) in half because the ray begins at the middle of the character
+            /// but use 1.9f to extend the distance check to just beyond the feet
+            float check = (charController.height + charController.radius) / 1.9f;
+            hitGround = hit.distance <= check;
+        }
+
+        if (hitGround) {
+            vertSpeed = Input.GetButtonDown("Jump") ? jumpSpeed : minFall;
+        } else {
+            vertSpeed += gravity * 5 * Time.deltaTime;
+            if (vertSpeed < terminalVelocity) {
+                vertSpeed = terminalVelocity;
+            }
+
+            if (charController.isGrounded) {
+                /// Dot product of two vectors ranges between -1 and 1
+                /// 1 meaning they point in exactly the same direction
+                /// -1 when they point in exactly opposite
+                if (Vector3.Dot(movement, contact.normal) < 0) {
+                    /// nudge in collision normal direction
+                    movement = contact.normal * moveSpeed;
+                } else {
+                    /// keep forward momentum going in collision normal direction
+                    movement += contact.normal * moveSpeed;
+                }
+            }
+        }
+        movement.y = vertSpeed;
+
         movement *= Time.deltaTime;
         charController.Move(movement);
+    }
+
+    void OnControllerColliderHit(ControllerColliderHit hit) {
+        contact = hit;
+        Debug.Log(hit);
     }
 }
