@@ -10,16 +10,16 @@ public class UIController : MonoBehaviour {
 
     private int score;
 
-	void Start () {
+    void Awake() {
+        Messenger.AddListener(GameEvent.ENEMY_HIT, OnEnemyHit);
+    }
+
+    void Start () {
         score = 0;
         scoreLabel.text = score.ToString();
 
         settingsPopup.Close();
 	}
-
-    void Awake() {
-        Messenger.AddListener(GameEvent.ENEMY_HIT, OnEnemyHit);
-    }
 
     void Destroy() {
         Messenger.RemoveListener(GameEvent.ENEMY_HIT, OnEnemyHit);

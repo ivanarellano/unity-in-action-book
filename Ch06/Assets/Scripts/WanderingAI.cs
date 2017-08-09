@@ -13,7 +13,11 @@ public class WanderingAI : MonoBehaviour {
     private GameObject fireball;
     private bool alive;
 
-	void Start () {
+    void Awake() { 
+        Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+    }
+
+    void Start () {
         alive = true;
 	}
 	
@@ -23,8 +27,10 @@ public class WanderingAI : MonoBehaviour {
 
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
+
             if (Physics.SphereCast(ray, 0.75f, out hit)) {
                 GameObject target = hit.transform.gameObject;
+
                 if (target.GetComponent<PlayerCharacter>()) {
                     if (fireball == null) {
                         fireball = Instantiate(fireballPrefab) as GameObject;
@@ -39,10 +45,6 @@ public class WanderingAI : MonoBehaviour {
             }
         }
 	}
-
-    void Awake() {
-        Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
-    }
 
     void OnDestroy() {
         Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);

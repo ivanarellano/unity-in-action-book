@@ -9,10 +9,6 @@ public class PlayerCharacter : MonoBehaviour {
 	void Start () {
         health = 5;
 	}
-	
-	void Update () {
-		
-	}
 
     public void Hurt(int damage) {
         health -= damage;

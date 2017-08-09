@@ -13,7 +13,7 @@ public class SettingsPopup : MonoBehaviour {
     }
 
     public void OnSubmitName(string name) {
-
+        // TODO
     }
 
     public void OnSpeedValue(float speed) {
