@@ -16,6 +16,9 @@ Self learning exercises from the [Unity in Action](https://www.manning.com/books
 ### Chapter 06
 ![Chapter 06](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch06/ch06.gif)
 
+### Chapter 06 Platformer
+![Chapter 06 Platformer](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch06_Platformer/ch06_platformer.gif)
+
 ### Chapter 07
 ![Chapter 07](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch07/ch07.gif)
 
