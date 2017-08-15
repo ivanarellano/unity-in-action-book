@@ -1,6 +1,13 @@
 # unity-in-action-book
 Self learning exercises from the [Unity in Action](https://www.manning.com/books/unity-in-action) book
 
+Chapter 09 requires an account with [OpenWeatherMap](http://openweathermap.org/) to run the weather changing skybox code. After registering, save the API key into `keys.json` in the `Ch09` directory with this structure:
+```
+{
+  "openweathermap": "api-key-here"
+}
+```
+
 ### Chapter 02
 ![Chapter 02](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch02/ch02.gif)
 

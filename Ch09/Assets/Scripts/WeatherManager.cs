@@ -13,6 +13,17 @@ public class WeatherManager : MonoBehaviour, IGameManager {
         Debug.Log("Weather service starting ...");
         networkService = service;
 
+        GetData();
+
+        status = ManagerStatus.Initializing;
+    }
+
+    private void GetData() {
+        StartCoroutine(networkService.GetWeatherXML(OnXMLDataLoaded));
+    }
+
+    private void OnXMLDataLoaded(string response) {
+        Debug.Log(response);
         status = ManagerStatus.Started;
     }
 }
