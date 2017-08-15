@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class NetworkService : MonoBehaviour {
 
-    private readonly string XML_API;
+    private readonly string WEATHER_XML_API;
+    private readonly string WEATHER_JSON_API;
+    private const string WEB_IMAGE = "http://upload.wikimedia.org/wikipedia/commons/c/c5/Moraine_Lake_17092005.jpg";
 
     public NetworkService(string apiKey) {
-        XML_API = "http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,us&appid=" + apiKey;
+        string appId = "&appid=" + apiKey;
+
+        WEATHER_XML_API = "http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,us&mode=xml" + appId;
+        WEATHER_JSON_API = "http://api.openweathermap.org/data/2.5/weather?q=Philadelphia,us" + appId;
     }
 
     private bool IsResponseValid(WWW www) {
-        if (www.error != null) {
+        if (!string.IsNullOrEmpty(www.error)) {
             Debug.Log("error: " + www.error);
             return false;
         } else if (string.IsNullOrEmpty(www.text)) {
@@ -22,9 +27,9 @@ public class NetworkService : MonoBehaviour {
         }
     }
 
-    private IEnumerator CallAPI(string url, Action<string> callback) {
+    private IEnumerator CallWeatherAPI(string url, Action<string> callback) {
         WWW response = new WWW(url);
-        yield return null;
+        yield return response;
 
         if (!IsResponseValid(response)) {
             yield break;
@@ -33,7 +38,17 @@ public class NetworkService : MonoBehaviour {
         callback(response.text);
     }
 
+    public IEnumerator DownloadImage(Action<Texture2D> callback) {
+        WWW www = new WWW(WEB_IMAGE);
+        yield return www;
+        callback(www.texture);
+    }
+
     public IEnumerator GetWeatherXML(Action<string> callback) {
-        return CallAPI(XML_API, callback);
+        return CallWeatherAPI(WEATHER_XML_API, callback);
+    }
+
+    public IEnumerator GetWeatherJSON(Action<string> callback) {
+        return CallWeatherAPI(WEATHER_JSON_API, callback);
     }
 }
