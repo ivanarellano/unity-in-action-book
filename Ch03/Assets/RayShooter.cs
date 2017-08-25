@@ -20,9 +20,11 @@ public class RayShooter : MonoBehaviour {
             Vector3 point = new Vector3(camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
             Ray ray = camera.ScreenPointToRay(point);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit)) {
                 GameObject hitObj = hit.transform.gameObject;
                 ReactiveTarget target = hitObj.GetComponent<ReactiveTarget>();
+
                 if (null != target) {
                     target.ReactToHit();
                 } else {

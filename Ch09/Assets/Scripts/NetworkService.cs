@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
 
-public class NetworkService : MonoBehaviour {
+public class NetworkService {
 
     private readonly string WEATHER_XML_API;
     private readonly string WEATHER_JSON_API;

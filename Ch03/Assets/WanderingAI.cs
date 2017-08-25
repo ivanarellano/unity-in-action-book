@@ -20,9 +20,11 @@ public class WanderingAI : MonoBehaviour {
             transform.Translate(0, 0, speed * Time.deltaTime);
 
             Ray ray = new Ray(transform.position, transform.forward);
+
             RaycastHit hit;
             if (Physics.SphereCast(ray, 0.75f, out hit)) {
                 GameObject target = hit.transform.gameObject;
+
                 if (target.GetComponent<PlayerCharacter>()) {
                     if (fireball == null) {
                         fireball = Instantiate(fireballPrefab) as GameObject;

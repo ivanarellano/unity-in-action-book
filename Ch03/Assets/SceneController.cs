@@ -8,10 +8,6 @@ public class SceneController : MonoBehaviour {
     [SerializeField] private GameObject enemyPrefab;
     private GameObject enemy;
 
-	void Start () {
-		
-	}
-	
 	void Update () {
 		if (enemy == null) {
             enemy = Instantiate(enemyPrefab) as GameObject;
