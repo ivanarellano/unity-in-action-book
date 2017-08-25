@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class WanderingAI : MonoBehaviour {
 
-    public float speed = 3.0f;
-    public float obstacleRange = 5.0f;
-
     [SerializeField] private GameObject fireballPrefab;
     private GameObject fireball;
     private bool alive;
+
+    public float speed = 3.0f;
+    public float obstacleRange = 5.0f;
 
 	void Start () {
         alive = true;

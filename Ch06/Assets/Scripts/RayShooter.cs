@@ -5,16 +5,16 @@ using UnityEngine.EventSystems;
 
 public class RayShooter : MonoBehaviour {
 
-	private Camera camera;
+	private Camera cam;
 
 	void Start () {
-		camera = GetComponent<Camera>();
+		cam = GetComponent<Camera>();
 	}
 	
 	void Update () {
 		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
-            Vector3 point = new Vector3(camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
-            Ray ray = camera.ScreenPointToRay(point);
+            Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
+            Ray ray = cam.ScreenPointToRay(point);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
                 GameObject hitObj = hit.transform.gameObject;
@@ -31,8 +31,8 @@ public class RayShooter : MonoBehaviour {
 
     private void OnGUI() {
         int size = 12;
-        float posX = camera.pixelWidth / 2 - size / 4;
-        float posY = camera.pixelHeight / 2 - size / 2;
+        float posX = cam.pixelWidth / 2 - size / 4;
+        float posY = cam.pixelHeight / 2 - size / 2;
         GUI.Label(new Rect(posX, posY, size, size), "*");
     }
 

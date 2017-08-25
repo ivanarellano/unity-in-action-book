@@ -5,10 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(Camera))]
 public class RayShooter : MonoBehaviour {
 
-	private Camera camera;
+    [SerializeField] private AudioSource soundSource;
+    [SerializeField] private AudioClip hitWallSound;
+    [SerializeField] private AudioClip hitEnemySound;
+
+    private Camera cam;
 
 	void Start () {
-		camera = GetComponent<Camera>();
+		cam = GetComponent<Camera>();
 
         // Hide the cursor and lock to center of the screen
         Cursor.lockState = CursorLockMode.Locked;
@@ -17,16 +21,20 @@ public class RayShooter : MonoBehaviour {
 	
 	void Update () {
 		if (Input.GetMouseButtonDown(0)) {
-            Vector3 point = new Vector3(camera.pixelWidth / 2, camera.pixelHeight / 2, 0);
-            Ray ray = camera.ScreenPointToRay(point);
+            Vector3 point = new Vector3(cam.pixelWidth / 2, cam.pixelHeight / 2, 0);
+            Ray ray = cam.ScreenPointToRay(point);
             RaycastHit hit;
+
             if (Physics.Raycast(ray, out hit)) {
                 GameObject hitObj = hit.transform.gameObject;
                 ReactiveTarget target = hitObj.GetComponent<ReactiveTarget>();
+
                 if (null != target) {
                     target.ReactToHit();
+                    soundSource.PlayOneShot(hitEnemySound);
                 } else {
                     StartCoroutine(SphereIndicator(hit.point));
+                    soundSource.PlayOneShot(hitWallSound);
                 }
             }
         }
@@ -34,8 +42,8 @@ public class RayShooter : MonoBehaviour {
 
     private void OnGUI() {
         int size = 12;
-        float posX = camera.pixelWidth / 2 - size / 4;
-        float posY = camera.pixelHeight / 2 - size / 2;
+        float posX = cam.pixelWidth / 2 - size / 4;
+        float posY = cam.pixelHeight / 2 - size / 2;
         GUI.Label(new Rect(posX, posY, size, size), "*");
     }
 
