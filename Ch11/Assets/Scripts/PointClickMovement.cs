@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(CharacterController))]
 public class PointClickMovement : MonoBehaviour{
@@ -34,13 +35,17 @@ public class PointClickMovement : MonoBehaviour{
         Vector3 movement = Vector3.zero;
 
         /// Set target position on click
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject()) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit mouseHit;
 
             if (Physics.Raycast(ray, out mouseHit)) {
-                targetPos = mouseHit.point;
-                curSpeed = moveSpeed;
+                GameObject hitObj = mouseHit.transform.gameObject;
+
+                if (hitObj.layer == LayerMask.NameToLayer("Ground")) {
+                    targetPos = mouseHit.point;
+                    curSpeed = moveSpeed;
+                }
             }
         }
 
@@ -76,12 +81,8 @@ public class PointClickMovement : MonoBehaviour{
         }
 
         if (hitGround) {
-            if (Input.GetButtonDown("Jump")) {
-                vertSpeed = jumpSpeed;
-            } else {
-                vertSpeed = -0.1f;
-                animator.SetBool("jumping", false);
-            }
+            vertSpeed = -0.1f;
+            animator.SetBool("jumping", false);
         } else {
             vertSpeed += gravity * 5 * Time.deltaTime;
             if (vertSpeed < terminalVelocity) {

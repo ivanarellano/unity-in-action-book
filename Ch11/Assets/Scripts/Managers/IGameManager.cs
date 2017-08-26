@@ -1,5 +1,5 @@
 public interface IGameManager {
-    ManagerStatus status { get; }
+    ManagerStatus Status { get; }
 
     void Startup(NetworkService service);
 }

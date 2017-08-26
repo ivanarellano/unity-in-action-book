@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ public class DeviceTrigger : MonoBehaviour {
     public bool requireKey;
 
     private void OnTriggerEnter(Collider other) {
-        if (requireKey && Managers.Inventory.equippedItem != "key") {
+        if (requireKey && Managers.Inventory.EquippedItem != "key") {
             return;
         }
 

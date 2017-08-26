@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,7 +24,7 @@ public class BasicUI : MonoBehaviour {
             posX += width + buffer;
         }
 
-        string equipped = Managers.Inventory.equippedItem;
+        string equipped = Managers.Inventory.EquippedItem;
         if (equipped != null) {
             posX = Screen.width - (width + buffer);
             Texture2D image = Resources.Load<Texture2D>(equipped);

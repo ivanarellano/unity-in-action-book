@@ -7,27 +7,28 @@ public class PlayerManager : MonoBehaviour, IGameManager {
 
     private NetworkService networkService;
 
-    public ManagerStatus status { get; private set; }
-    public int health { get; private set; }
-    public int maxHealth { get; private set; }
+    public ManagerStatus Status { get; private set; }
+    public int Health { get; private set; }
+    public int MaxHealth { get; private set; }
 
     public void Startup(NetworkService service) {
         Debug.Log("Player model starting...");
 
-        health = 50;
-        maxHealth = 100;
+        Health = 50;
+        MaxHealth = 100;
 
-        status = ManagerStatus.Started;
+        Status = ManagerStatus.Started;
     }
 
     public void ChangeHealth(int value) {
-        health += value;
-        if (health > maxHealth) {
-            health = maxHealth;
-        } else if (health < 0) {
-            health = 0;
+        Health += value;
+
+        if (Health > MaxHealth) {
+            Health = MaxHealth;
+        } else if (Health < 0) {
+            Health = 0;
         }
 
-        Debug.Log("health: " + health + "/" + maxHealth);
+        Messenger.Broadcast(GameEvent.HEALTH_UPDATED);
     }
 }

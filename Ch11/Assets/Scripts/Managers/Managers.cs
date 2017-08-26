@@ -50,7 +50,7 @@ public class Managers : MonoBehaviour {
             numReady = 0;
 
             foreach (IGameManager model in models) {
-                if (model.status == ManagerStatus.Started) {
+                if (model.Status == ManagerStatus.Started) {
                     numReady++;
                 }
             }

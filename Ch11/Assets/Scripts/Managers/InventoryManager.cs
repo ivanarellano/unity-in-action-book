@@ -5,66 +5,66 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour, IGameManager {
 
-    public ManagerStatus status { get; private set; }
-    public string equippedItem { get; private set; }
+    public ManagerStatus Status { get; private set; }
+    public string EquippedItem { get; private set; }
 
-    private Dictionary<string, int> items;
-    private NetworkService networkService;
+    private Dictionary<string, int> Items;
+    private NetworkService NetworkService;
 
     public void Startup(NetworkService service) {
         Debug.Log("Inventory model starting...");
 
-        networkService = service;
+        NetworkService = service;
 
-        items = new Dictionary<string, int>();
+        Items = new Dictionary<string, int>();
 
-        status = ManagerStatus.Started;
+        Status = ManagerStatus.Started;
     }
 
     private void DisplayItems() {
         string itemDisplay = "Items: ";
-        foreach (KeyValuePair<string, int> item in items) {
+        foreach (KeyValuePair<string, int> item in Items) {
             itemDisplay += item.Key + "(" + item.Value + ") ";
         }
         Debug.Log(itemDisplay);
     }
 
     public void AddItem(string name) {
-        if (items.ContainsKey(name)) {
-            items[name]++;
+        if (Items.ContainsKey(name)) {
+            Items[name]++;
         } else {
-            items[name] = 1;
+            Items[name] = 1;
         }
 
         DisplayItems();
     }
 
     public List<string> GetItemList() {
-        return new List<string>(items.Keys);
+        return new List<string>(Items.Keys);
     }
 
     public int GetItemCount(string name) {
-        if (items.ContainsKey(name)) {
-            return items[name];
+        if (Items.ContainsKey(name)) {
+            return Items[name];
         }
         return 0;
     }
 
     public bool EquipItem(string item) {
-        if (items.ContainsKey(item) && equippedItem != item) {
-            equippedItem = item;
+        if (Items.ContainsKey(item) && EquippedItem != item) {
+            EquippedItem = item;
             return true;
         }
-        equippedItem = null;
+        EquippedItem = null;
         return false;
     }
 
     public bool ConsumeItem(string name) {
-        if (items.ContainsKey(name)) {
-            items[name]--;
+        if (Items.ContainsKey(name)) {
+            Items[name]--;
 
-            if (items[name] == 0) {
-                items.Remove(name);
+            if (Items[name] == 0) {
+                Items.Remove(name);
             }
         } else {
             Debug.Log("cannot consume " + name);
