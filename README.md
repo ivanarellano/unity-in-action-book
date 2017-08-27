@@ -37,3 +37,6 @@ Chapter 09 requires an account with [OpenWeatherMap](http://openweathermap.org/)
 
 ### Chapter 10
 Chapter 10 has no GIF worthy addition. Instead, it demonstrates loading sound clips, playing background music on loop, and cross fades streaming music.
+
+### Chapter 11
+![Chapter 11](https://github.com/ivanarellano/unity-in-action-book/blob/master/Ch11/ch11.gif)

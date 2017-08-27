@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour, IGameManager {
 
+    /// Defaults
+    private const int HEALTH = 50;
+    private const int MAX_HEALTH = 100;
+
     private NetworkService networkService;
 
     public ManagerStatus Status { get; private set; }
@@ -27,8 +31,18 @@ public class PlayerManager : MonoBehaviour, IGameManager {
             Health = MaxHealth;
         } else if (Health < 0) {
             Health = 0;
+            Messenger.Broadcast(GameEvent.LEVEL_FAILED);
         }
 
         Messenger.Broadcast(GameEvent.HEALTH_UPDATED);
+    }
+
+    public void UpdateData(int health, int maxHealth) {
+        Health = health;
+        MaxHealth = maxHealth;
+    }
+
+    public void Respawn() {
+        UpdateData(HEALTH, MAX_HEALTH);
     }
 }

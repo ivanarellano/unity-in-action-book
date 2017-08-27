@@ -16,8 +16,9 @@ public class InventoryManager : MonoBehaviour, IGameManager {
 
         NetworkService = service;
 
-        Items = new Dictionary<string, int>();
+        UpdateData(new Dictionary<string, int>());
 
+        Items = new Dictionary<string, int>();
         Status = ManagerStatus.Started;
     }
 
@@ -73,5 +74,13 @@ public class InventoryManager : MonoBehaviour, IGameManager {
 
         DisplayItems();
         return true;
+    }
+
+    public void UpdateData(Dictionary<string, int> items) {
+        Items = items;
+    }
+
+    public Dictionary<string, int> GetData() {
+        return Items;
     }
 }
